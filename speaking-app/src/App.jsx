@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UploadCloud } from 'lucide-react';
 import './App.css'; // make sure this import is here
 
 export default function App() {
   const [videoFile, setVideoFile] = useState(null);
+
+  /* For data from Flask */
+  const [data, setData] = useState([{}]);
+  useEffect(() => {
+    fetch("/api/data").then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data);
+        console.log(data);
+      }
+    )
+  }, []);
+
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
